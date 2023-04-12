@@ -1,0 +1,10 @@
+.cards__info {
+  margin: 0;
+  padding: 25px 15px 31px 21px;
+  max-height: 23px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFF;
+  border-radius: 0 0 10px 10px;
+  }
