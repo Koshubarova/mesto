@@ -36,3 +36,5 @@
 @import url(../blocks/popup/__name/popup__name.css);
 @import url(../blocks/popup/__submit/popup__submit.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+
+/* * { outline: 1px solid yellow; }*/

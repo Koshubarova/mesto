@@ -10,59 +10,58 @@
   <div class="page">
     <header class="header">
       <img class="header__logo" src="./images/logo_Mesto.svg" alt="Лого Mesto">
-      <img class="line" src="./images/Line.svg" alt="Линия">
     </header>
     <main class="content">
       <section class="profile">
         <img class="profile__photo" src="./images/Avatar.svg" alt="Фото профиля">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button type="button" class="profile__edit"></button>
+          <button type="button" class="profile__edit" aria-label="Редактировать профиль"></button>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
-        <img class="profile__add" src="./images/Add Button.svg" alt="Добавить место">
+        <button type="button" class="profile__add"></button>
       </section>
       <section class="cards">
         <div class="cards__item">
           <img class="cards__image" src="./images/Sheregesh.avif" alt="Шерегеш">
           <div class="cards__info">
             <h2 class="cards__name">Шерегеш</h2>
-            <img class="cards__like-button" src="./images/Like-button.svg" alt="Лайк">
+            <button type="button" class="cards__like-button" aria-label="Лайк"></button>
           </div>
         </div>
         <div class="cards__item">
-          <img class="cards__image" src="./images/Roza Khutor.avif" alt="Роза Хутор">
+          <img class="cards__image" src="./images/RozaKhutor.avif" alt="Роза Хутор">
           <div class="cards__info">
             <h2 class="cards__name">Роза Хутор</h2>
-            <img class="cards__like-button" src="./images/Like-button.svg" alt="Лайк">
+            <button type="button" class="cards__like-button" aria-label="Лайк"></button>
           </div>
         </div>
         <div class="cards__item">
           <img class="cards__image" src="./images/Dombay.avif" alt="Домбай">
           <div class="cards__info">
             <h2 class="cards__name">Домбай</h2>
-            <img class="cards__like-button" src="./images/Like-button.svg" alt="Лайк">
+            <button type="button" class="cards__like-button" aria-label="Лайк"></button>
           </div>
         </div>
         <div class="cards__item">
           <img class="cards__image" src="./images/Bannoe.avif" alt="Банное">
           <div class="cards__info">
             <h2 class="cards__name">Банное</h2>
-            <img class="cards__like-button" src="./images/Like-button.svg" alt="Лайк">
+            <button type="button" class="cards__like-button" aria-label="Лайк"></button>
           </div>
         </div>
         <div class="cards__item">
           <img class="cards__image" src="./images/Sakhalin.avif" alt="Сахалин">
           <div class="cards__info">
             <h2 class="cards__name">Сахалин</h2>
-            <img class="cards__like-button" src="./images/Like-button.svg" alt="Лайк">
+            <button type="button" class="cards__like-button" aria-label="Лайк"></button>
           </div>
         </div>
         <div class="cards__item">
-          <img class="cards__image" src="./images/krasnaya polyana.avif" alt="Красная поляна">
+          <img class="cards__image" src="./images/krasnayaPolyana.avif" alt="Красная поляна">
           <div class="cards__info">
             <h2 class="cards__name">Красная поляна</h2>
-            <img class="cards__like-button" src="./images/Like-button.svg" alt="Лайк">
+            <button type="button" class="cards__like-button" aria-label="Лайк"></button>
           </div>
         </div>
       </section>
@@ -77,16 +76,12 @@
       <button type="button" class="popup__close" aria-label="Закрыть форму"></button>
       <h3 class="popup__name">Редактировать профиль</h3>
       <form class="popup__form" name="profile">
-        <label for="username-input" class="popup__label">
-          <input type="text" id="username-input" name="username" class="popup__input input-name" placeholder="Жак-Ив Кусто">
-        </label>
-        <label for="description-input" class="popup__label">
-          <input type="text" id="description-input" class="popup__input input-job" name="description" placeholder="Исследователь океана">
-        </label>
+        <input type="text" id="username-input" class="popup__input popup__input_name" name="username" >
+        <input type="text" id="description-input" class="popup__input popup__input_job" name="description">
         <button type="submit" class="popup__submit" aria-label="Сохранить">Сохранить</button>
       </form>
     </div>
   </div>
-  <script src="./pages/script.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>
