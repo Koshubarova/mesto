@@ -69,16 +69,18 @@ const createCard = (data) => {
   const cardImage = newCard.querySelector(".cards__image");
   const deleteButton = newCard.querySelector(".cards__delete-button");
   const likeButton = newCard.querySelector(".cards__like-button");
+  const popupImage = document.querySelector(".popup__container_type_image");
 
   cardImage.src = data.link;
   cardName.textContent = data.name;
   cardImage.alt = data.name;
 
   cardImage.addEventListener("click", () => {
-  popupCardImage.src = data.link;
-  popupCardName.textContent = data.name;
-  popupCardImage.alt = data.name;
-  openPopup(popupFullscreen);
+    popupCardImage.src = data.link;
+    popupCardName.textContent = data.name;
+    popupCardImage.alt = data.name;
+    openPopup(popupFullscreen);
+    popupImage.classList.remove('popup__container');
   });
 
   deleteButton.addEventListener('click', (evt) => {
