@@ -107,7 +107,6 @@ const createCard = (data) => {
     popupCardName.textContent = data.name;
     popupCardImage.alt = data.name;
     openPopup(popupFullscreen);
-    popupImage.classList.remove('popup__container');
   });
 
   deleteButton.addEventListener('click', (evt) => {
