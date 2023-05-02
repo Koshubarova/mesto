@@ -69,13 +69,22 @@ const closePopupOverlay = (evt) => {
 const openPopup = (popupElement) => {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEsc);
-  popupElement.addEventListener('click', closePopupOverlay);
 };
 const closePopup = (popupElement) => {
   popupElement.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupEsc);
   popupElement.removeEventListener('click', closePopupOverlay);
 }
+
+// закрытие попапа по оверлей
+const popupOverlay = document.querySelectorAll('.popup');
+const setPopupOverlay = (i, overlay) => {
+for (let i = 0; i < popupOverlay.length; i++) {
+  const overlay = popupOverlay[i];
+  overlay.addEventListener('click', closePopupOverlay);
+};
+};
+setPopupOverlay();
 
 // слушатели на кнопки открытия/закрытия попапа
 openPopupEditButton.addEventListener('click', () => {
@@ -162,5 +171,8 @@ const addCardSubmit = (evt) => {
   addNewCard(createCard(cardData));
   closePopup(popupAdd);
   formAddCard.reset();
+  evt.submitter.classList.add('popup__submit_inactive');
+  evt.submitter.disabled = true;
 }
+
 formAddCard.addEventListener('submit', addCardSubmit);
