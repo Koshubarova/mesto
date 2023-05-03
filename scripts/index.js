@@ -73,7 +73,6 @@ const openPopup = (popupElement) => {
 const closePopup = (popupElement) => {
   popupElement.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupEsc);
-  popupElement.removeEventListener('click', closePopupOverlay);
 }
 
 // закрытие попапа по оверлей
