@@ -1,29 +1,8 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+import Card from './Card.js';
+import { configValidation, initialCards } from './constants.js';
+import FormValidator from './FormValidator.js';
+
+export { openPopup };
 
 // попап редактирования профиля
 const popupEdit = document.querySelector('.popup-edit');
@@ -51,6 +30,10 @@ const popupFullscreen = document.querySelector('.popup_fullscreen');
 const popupCardImage = document.querySelector('.popup__image');
 const popupCardName = document.querySelector('.popup__image-name');
 const buttonCloseImage = document.querySelector('.popup__close-image');
+
+//селекторы форм для валидации
+const profileForm = document.querySelector('.popup__form-edit');
+const cardsForm = document.querySelector('.popup__form-add');
 
 //закрытие попапов на Escape и overlay
 const closePopupEsc = (evt) => {
@@ -114,33 +97,10 @@ const handleProfileFormSubmit = (evt) => {
 }
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
-// добавление новой карточки
-const createCard = (data) => {
-  const newCard = templateCardItem.cloneNode(true);
-  const cardName = newCard.querySelector('.cards__name');
-  const cardImage = newCard.querySelector('.cards__image');
-  const deleteButton = newCard.querySelector('.cards__delete-button');
-  const likeButton = newCard.querySelector('.cards__like-button');
-
-  cardImage.src = data.link;
-  cardName.textContent = data.name;
-  cardImage.alt = data.name;
-
-  cardImage.addEventListener('click', () => {
-    popupCardImage.src = data.link;
-    popupCardName.textContent = data.name;
-    popupCardImage.alt = data.name;
-    openPopup(popupFullscreen);
-  });
-
-  deleteButton.addEventListener('click', (evt) => {
-    evt.target.closest('.cards__item').remove();
-  });
-
-  likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('cards__like-button_active');
-  });
-
+// Создание карточки через класс Card
+function createCard(data) {
+  const card = new Card(data, '#template__card');
+  const newCard = card.generateCard();
   return newCard;
 };
 
@@ -175,3 +135,9 @@ const addCardSubmit = (evt) => {
 }
 
 formAddCard.addEventListener('submit', addCardSubmit);
+
+//валидации форм
+const profileValidation = new FormValidator(configValidation, profileForm);
+profileValidation.enableValidation();
+const cardsValidation = new FormValidator(configValidation, cardsForm);
+cardsValidation.enableValidation();
