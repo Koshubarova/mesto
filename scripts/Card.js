@@ -1,4 +1,4 @@
-import { openPopup } from "./index.js";
+import { openPopup, popupFullscreen, popupCardImage, popupCardName } from "./index.js";
 export default class Card {
 
   constructor(data, templateSelector) {
@@ -8,13 +8,11 @@ export default class Card {
   }
 
   _getTemplate = () => {
-    const cardElement = document
+    return document
     .querySelector(this._templateSelector)
     .content
     .querySelector('.cards__item')
     .cloneNode(true);
-
-  return cardElement;
   }
 
   generateCard = () => {
@@ -38,12 +36,11 @@ export default class Card {
       this._like(evt);
     });
     this._cardImage.addEventListener('click', () => {
-      this._popupCardImage = document.querySelector('.popup__image');
-      this._popupCardName = document.querySelector('.popup__image-name');
+      this._popupCardImage = popupCardImage;
+      this._popupCardName = popupCardName;
       this._popupCardName.textContent = this._name;
       this._popupCardImage.src = this._link;
       this._popupCardImage.alt = this._name;
-      const popupFullscreen = document.querySelector('.popup_fullscreen');
       openPopup(popupFullscreen);
     });
   };

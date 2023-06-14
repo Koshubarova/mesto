@@ -2,7 +2,7 @@ import Card from './Card.js';
 import { configValidation, initialCards } from './constants.js';
 import FormValidator from './FormValidator.js';
 
-export { openPopup };
+export { openPopup, popupFullscreen, popupCardImage, popupCardName };
 
 // попап редактирования профиля
 const popupEdit = document.querySelector('.popup-edit');
@@ -24,6 +24,7 @@ const cards = document.querySelector('.cards');
 const formAddCard = document.querySelector('.popup__form-add');
 const cardNameInput = document.querySelector('.popup__input_type_card-name');
 const cardLinkInput = document.querySelector('.popup__input_type_link');
+const buttonSubmit = document.querySelector('.popup__submit');
 
 //попап увеличения картинки
 const popupFullscreen = document.querySelector('.popup_fullscreen');
@@ -130,8 +131,7 @@ const addCardSubmit = (evt) => {
   addNewCard(createCard(cardData));
   closePopup(popupAdd);
   formAddCard.reset();
-  evt.submitter.classList.add('popup__submit_inactive');
-  evt.submitter.disabled = true;
+  cardsValidation.disableSubmitButton();
 }
 
 formAddCard.addEventListener('submit', addCardSubmit);
