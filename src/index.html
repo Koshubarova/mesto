@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
 </head>
 <body class="body">
   <div class="page">
     <header class="header">
-      <img class="header__logo" src="./images/logo_Mesto.svg" alt="Лого Mesto">
+      <img class="header__logo" src="<%=require('./images/logo_Mesto.svg')%>" alt="Лого Mesto">
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__photo" src="./images/Avatar.svg" alt="Фото профиля">
+        <img class="profile__photo" src="<%=require('./images/Avatar.svg')%>" alt="Фото профиля">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__edit" aria-label="Редактировать профиль"></button>
@@ -116,7 +116,7 @@
   <template id="template__card">
     <div class="cards__item">
       <img class="cards__image">
-      <img src="./images/DeleteButton.svg" class="cards__delete-button" alt="Удалить">
+      <img src="<%=require('./images/DeleteButton.svg')%>" class="cards__delete-button" alt="Удалить">
       <div class="cards__info">
         <h2 class="cards__name"></h2>
         <button type="button" class="cards__like-button"></button>
@@ -124,8 +124,6 @@
     </div>
   </template>
 
-<!--  <script src="./scripts/constants.js"></script>
-  <script src="./scripts/validate.js"></script> -->
-  <script type="module" src="../src/pages/index.js"></script>
+  <!-- <script type="module" src="../src/pages/index.js"></script> -->
 </body>
 </html>
