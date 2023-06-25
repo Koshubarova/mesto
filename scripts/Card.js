@@ -1,10 +1,10 @@
-import { openPopup, popupFullscreen, popupCardImage, popupCardName } from "./index.js";
 export default class Card {
 
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate = () => {
@@ -36,12 +36,7 @@ export default class Card {
       this._like(evt);
     });
     this._cardImage.addEventListener('click', () => {
-      this._popupCardImage = popupCardImage;
-      this._popupCardName = popupCardName;
-      this._popupCardName.textContent = this._name;
-      this._popupCardImage.src = this._link;
-      this._popupCardImage.alt = this._name;
-      openPopup(popupFullscreen);
+      this._handleCardClick({ name: this._name, link: this._link });
     });
   };
 
