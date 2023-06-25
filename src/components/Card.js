@@ -44,7 +44,7 @@ export default class Card {
     this._element.remove();
   }
 
-  _like = (evt) => {
-    evt.target.classList.toggle('cards__like-button_active');
+  _like = () => {
+    this._likeButton.classList.toggle('cards__like-button_active');
   }
 }

@@ -1,12 +1,12 @@
-import './pages/index.css';
-import Card from './components/Card.js';
-import { configValidation, initialCards } from './utils/constants.js';
-import FormValidator from './components/FormValidator.js';
-import Section from './components/Section.js';
-import Popup from './components/Popup.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import PopupWithImage from './components/PopupWithImage.js';
-import UserInfo from './components/UserInfo.js';
+import './index.css';
+import Card from '../components/Card.js';
+import { configValidation, initialCards } from '../utils/constants.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 
 // попап редактирования профиля
 const popupEdit = document.querySelector('.popup-edit');
@@ -51,9 +51,8 @@ popupImage.setEventListeners();
 
 const userInfo = new UserInfo({userNameSelector: ".profile__name", userDescriptionSelector: ".profile__subtitle"});
 
-const popupProfile = new PopupWithForm('.popup-edit', (evt) => {
-  evt.preventDefault();
-  userInfo.setUserInfo(popupProfile.getInputValues());
+const popupProfile = new PopupWithForm('.popup-edit', (data) => {
+  userInfo.setUserInfo(data);
   popupProfile.close();
 });
 popupProfile.setEventListeners();
@@ -63,24 +62,25 @@ openPopupEditButton.addEventListener("click", () => {
   popupProfile.open();
 });
 
-const popupCards = new PopupWithForm('.popup-add', (evt) => {
-  evt.preventDefault();
-  section.addItem(section.renderer(popupCards.getInputValues()));
+const popupCards = new PopupWithForm('.popup-add', (data) => {
+  rendererCards.addItem(createCard(data));
   popupCards.close();
 });
 popupCards.setEventListeners();
 
 openPopupAddButton.addEventListener("click", () => {
+  cardsValidation.disableSubmitButton();
   popupCards.open();
 });
 
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: (data) => {
-      const card = new Card(data, '#template__card', popupImage.open);
-      return card.generateCard();
-    },
-  },
-  '.cards');
-section.renderItems();
+const createCard = (data) => {
+  const createCard = new Card(data, '#template__card', popupImage.open)
+  return createCard.generateCard();
+}
+
+const rendererCards = new Section({
+  renderer: (data) => {
+    rendererCards.addItem(createCard(data));
+  }}, '.cards');
+
+  rendererCards.renderItems(initialCards);
