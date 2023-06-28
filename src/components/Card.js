@@ -34,16 +34,16 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
 
+    this._setEventListeners();
     this._likesCheck();
     this._deleteButtonVisibility();
-    this._setEventListeners();
     return this._element;
   }
 
   _setEventListeners = () => {
     this._deleteButton.addEventListener('click', this._deleteCard);
     this._likeButton.addEventListener('click', (evt) => {
-      this.like(evt);
+      this._handleLike(this._cardId, this._likeButton);
     });
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick({ name: this._name, link: this._link });
@@ -51,25 +51,25 @@ export default class Card {
   };
 
   _deleteCard = () => {
-    this._submitDelete(this._element);
+    this._submitDelete(this, this._cardId);
   }
 
   _likeCard = () => {
-    this._handleLike(this._likeButton, this._cardId, this._likeCounter)
+    this._handleLike(this._likeButton, this._cardId)
   }
 
   _likesCheck() {
     this._likes.forEach(item => {
       if (item._id === this._myId) {
         this._likeButton.classList.add('cards__like-button_active')
-        return
       }
     })
-    this._likeCounter.textContent = this._likesLength
+    this._likeCounter.textContent = this._likesLength;
   }
 
   _deleteButtonVisibility() {
-    this._myId === this._ownerId ? this._deleteButton.style.display = 'block' : this._deleteButton.style.display = 'none';
+    if (this._myId !== this._ownerId) {
+    this._deleteButton.remove()};
   }
 
   removeCard = () => {

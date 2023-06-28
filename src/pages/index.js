@@ -1,4 +1,4 @@
-import './index.css';
+// import './index.css';
 import Card from '../components/Card.js';
 import { configValidation, initialCards } from '../utils/constants.js';
 import FormValidator from '../components/FormValidator.js';
@@ -73,8 +73,8 @@ const userInfo = new UserInfo({userNameSelector: '.profile__name', userDescripti
 //Редактирование профиля
 const popupProfile = new PopupWithForm('.popup-edit', (data) => {
   api.setUserInfo(data)
-  .then(res => {
-    userInfo.setUserInfo({name: res.name, description: res.about, photo: res.avatar})
+  .then((res) => {
+    userInfo.setUserInfo({username: res.name, description: res.about, photo: res.avatar})
   popupProfile.close();
   })
   .catch((error) => console.error(error))
@@ -90,8 +90,8 @@ openPopupEditButton.addEventListener("click", () => {
 //Изменение фото профиля
 const popupEditPhoto = new PopupWithForm(popupEditPhotoSelector, (data) => {
   api.setPhoto(data)
-    .then(res => {
-      userInfo.setUserInfo({ name: res.name, description: res.about, photo: res.avatar });
+    .then((res) => {
+      userInfo.setUserInfo({ username: res.name, description: res.about, photo: res.avatar });
       popupEditPhoto.close()
     })
     .catch((error) => console.error(error))
@@ -108,7 +108,7 @@ popupEditPhotoButton.addEventListener('click', ()=> {
 const popupSubmitDelete = new PopupWithSubmit('.popup-delete', (card, cardId) => {
   api.deleteCard(cardId)
   .then(() => {
-    card.removeCard(card)
+    card.removeCard()
     popupSubmitDelete.close();
   })
   .catch((error) => console.error(error))
@@ -116,12 +116,13 @@ const popupSubmitDelete = new PopupWithSubmit('.popup-delete', (card, cardId) =>
 });
 popupSubmitDelete.setEventListeners();
 
-//Создание карточки
+//Попап создания карточки
 const popupCards = new PopupWithForm('.popup-add', (data) => {
-  Promise.all([api.getUserInfo(), api.addNewCard(data)])
-    .then(([dataUser, dataCard]) => {
-      dataCard.myid = dataUser._id
-      rendererCards.addItem(createCard(dataCard))
+ api.addNewCard(data)
+    .then((data) => {
+      // console.log(data);
+      data.myid = data.owner._id
+      rendererCards.addItem(createCard(data))
       popupCards.close()
     })
     .catch((error) => console.error(error))
@@ -136,28 +137,51 @@ openPopupAddButton.addEventListener("click", () => {
 
 //Создание карточки
 const createCard = (data) => {
-  const createCard = new Card(data, '#template__card', popupImage.open, popupSubmitDelete.open, (likeElement, cardId) => {
-    if (likeElement.classList.contains('cards__like-button_active')) {
+  const createCard = new Card(data, '#template__card', popupImage.open, popupSubmitDelete.open, (cardId, likeButton) => {
+    if (likeButton.classList.contains('cards__like-button_active')) {
       api.deleteLike(cardId)
-        .then(res => {
-          createCard.like(res.likes)
+        .then((res) => {
+          createCard.like(res.likes);
         })
-        .catch((error) => console.error(error))
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
     } else {
       api.addLike(cardId)
-        .then(res => {
-          createCard.like(res.likes)
+        .then((res) => {
+          createCard.like(res.likes);
         })
-        .catch((error) => console.error(error))
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
     }
-  })
+  });
   return createCard.generateCard();
 }
 
-const rendererCards = new Section({
-  renderer: (data) => {
-    rendererCards.addItem(createCard(data));
-  }}, '.cards');
+// const handleLike = (cardId, likeButton) => {
+//   if (likeButton.classList.contains('cards__like-button_active')) {
+//     api.deleteLike(cardId)
+//       .then((res) => {
+//         createCard.like(res.likes);
+//       })
+//       .catch((err) => {
+//         console.log(`Ошибка: ${err}`);
+//       });
+//   } else {
+//     api.addLike(cardId)
+//       .then((res) => {
+//         createCard.like(res.likes);
+//       })
+//       .catch((err) => {
+//         console.log(`Ошибка: ${err}`);
+//       });
+//   }
+// }
+
+const rendererCards = new Section((data) => {
+    rendererCards.addItem(createCard(data))
+  }, '.cards');
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([dataUser, dataCard]) => {

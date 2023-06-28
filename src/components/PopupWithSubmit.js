@@ -4,7 +4,6 @@ export default class PopupWithSubmit extends Popup {
   constructor (popupSelector, handlePopupSubmit) {
     super(popupSelector);
     this._form = this._popup.querySelector('.popup__form');
-    this._submitButton = this._popup.querySelector('.popup__submit');
     this._handlePopupSubmit = handlePopupSubmit;
   }
 
@@ -12,7 +11,7 @@ export default class PopupWithSubmit extends Popup {
     super.setEventListeners()
     this._form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    this._submitButton.textContent = 'Удаляем...'
+    this.submitButton.textContent = 'Удаляем...'
     this._handlePopupSubmit(this._card, this._cadrId)
     })
   }
@@ -26,6 +25,5 @@ export default class PopupWithSubmit extends Popup {
   close() {
     super.close();
     this._form.reset();
-    this._submitButton.textContent = "Да";
   }
 }

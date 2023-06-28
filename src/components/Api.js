@@ -5,39 +5,26 @@ export default class Api {
     this._authorization = options.headers.authorization
   }
 
-  getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-69/cards', {
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283'
-      }
-    })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject;
-      });
-  }
-
   _checkResponse(res) {return res.ok ? res.json() : Promise.reject}
 
-  getUserInfo() {
-    return fetch('https://nomoreparties.co/v1/cohort-69/users/me', {
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283'
-      }
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers
     })
-      .then(res => res.ok ? res.json() : Promise.reject)
+      .then(this._checkResponse)
   }
 
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers
+    })
+      .then(this._checkResponse)
+  }
 
   setUserInfo(data) {
-    return fetch('https://nomoreparties.co/v1/cohort-69/users/me', {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.username,
         about: data.description,
@@ -47,12 +34,9 @@ export default class Api {
   }
 
   setPhoto(data) {
-    return fetch('https://nomoreparties.co/v1/cohort-69/users/me/avatar', {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.photo,
       })
@@ -61,12 +45,9 @@ export default class Api {
   }
 
   addNewCard(data) {
-    return fetch('https://nomoreparties.co/v1/cohort-69/cards', {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -76,31 +57,25 @@ export default class Api {
   }
 
   addLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-69/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283'
-      }
+      headers: this._headers
     })
     .then(this._checkResponse)
   }
 
   deleteLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-69/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283'
-      }
+      headers: this._headers
     })
     .then(this._checkResponse)
   }
 
   deleteCard(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-69/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        authorization: '39c56915-9550-44c8-84ed-160de228f283'
-      }
+      headers: this._headers
     })
     .then(this._checkResponse)
   }
